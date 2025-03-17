@@ -1,34 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/login.dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+} from "@nestjs/common";
+import { UserService } from "./user.service";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { LoginDto } from "./dto/login.dto";
 
-@Controller('user')
+@Controller("user")
 export class UserController {
-  constructor(private readonly userService: UserService) { }
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
-  findAll() {
+  findAllUser() {
     return this.userService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Post('signup')
+  signup(@Body() createUserDto:CreateUserDto) {
+    return this.userService.signup(createUserDto);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Post('login')
+  login(@Body() loginDto:LoginDto) {
+    return this.userService.login(loginDto);
   }
 }
